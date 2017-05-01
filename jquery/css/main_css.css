@@ -1,0 +1,17 @@
+.container {
+  width: 600px;
+  margin: 0 auto;
+}
+.detail table {
+  border-spacing: 0;
+}
+.detail table th, .detail table td {
+  border: 1px solid #000;
+  padding: 2px;
+}
+.detail-capital {
+  color: darkgreen;
+}
+.detail-interest {
+  color: deeppink;
+}
