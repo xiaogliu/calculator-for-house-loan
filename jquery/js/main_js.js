@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 等额本金、等额本息还款方式详细对比
  * 带有Ai后缀为等额本息还款方式，即average interest
@@ -26,7 +28,7 @@ const loanFormula = {
 
     return (loanTotalPrice * interestRatePerMouth * x / (x - 1));
   },
-  
+
   // 等额本息第i个月还款中利息部分
   getRepayInterestPerMouthAi: function (i, loanTotalPrice, interestRatePerMouth, totalMouths) {
     /**
@@ -92,12 +94,12 @@ $(document).ready(function () {
 
     // 等额本金初始化已还总金额
     let totalRepayedPerMouthAc = 0;
-    
+
     const getRepayPerMouthObj = function () {
       for(let i = 0; i < totalMouths; i++) {
         // 等额本息第(i+1)个月需还利息
         let repayInterestPerMouthAi = loanFormula.getRepayInterestPerMouthAi(i, loanTotalPrice, interestRatePerMouth, totalMouths);
-        
+
         // 等额本息第(i+1)个月需还本金：月均还本带息 - 利息部分
         let repayCapitalPerMouthAi = repayPerMouthPriceAi - repayInterestPerMouthAi;
 
@@ -134,11 +136,10 @@ $(document).ready(function () {
       return repayPerMouthObj;
     };
     getRepayPerMouthObj();
-    console.log(repayPerMouthObj);
 
     // 等额本息总还本带息： 月均还本带息 × 总月数
     let totalRepayPriceAi = repayPerMouthPriceAi * totalMouths;
-    
+
     // 等额本息总还款利息： 总还本带息 - 总贷款额
     let totalInterestPriceAi = totalRepayPriceAi - loanTotalPrice;
 
@@ -148,27 +149,37 @@ $(document).ready(function () {
     $('.total-repay-ai').html(formatFloat(totalRepayPriceAi, 2));
     $('.repay-per-mouth-ai').html(formatFloat(repayPerMouthPriceAi, 2));
 
-
-
     // 拼接每月还款明细：每月还款本金、利息及待还本金
-    for(let i = 0; i < repayPerMouthObj.repayPerMouthObjAi.repayInterestPerMouthArrAi.length; i++) {
+    let detailTable = $('.detail table');
+    detailTable.html('' +
+        '<table>' +
+          '<tr>' +
+            '<th>月份</th>' +
+            '<th>等额本息月供金额（<span class="detail-capital">本金</span>/<span class="detail-interest">利息</span>）</th>' +
+            '<th>等额本金月供金额（<span class="detail-capital">本金</span>/<span class="detail-interest">利息</span>）</th> ' +
+            '<th>等额本息剩余本金</th>' +
+            ' <th>等额本金剩余本金</th>' +
+            ' <th>等额本息已还总额</th>' +
+            ' <th>等额本金已还总额</th>' +
+          ' </tr>' +
+        ' </table>'); // 每次计算前清空数据
 
-      let detailTable = $('.detail table');
+    for(let i = 0; i < repayPerMouthObj.repayPerMouthObjAi.repayInterestPerMouthArrAi.length; i++) {
 
       if((i%12 + 1) === 1) {
         detailTable.append(
           '<tr><td>第' + (parseInt(i/12) + 1) + '年</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'
           )
       }
-      
+
       detailTable.append(
         '<tr><td>' + (i%12 + 1) + '</td><td>' + formatFloat(repayPerMouthPriceAi, 2)
         + '(<span class="detail-capital">' + repayPerMouthObj.repayPerMouthObjAi.repayCapitalPerMouthArrAi[i]
         + '</span>/<span class="detail-interest">' + repayPerMouthObj.repayPerMouthObjAi.repayInterestPerMouthArrAi[i]
         + '</span>)</td><td>' + repayPerMouthObj.repayPerMouthObjAc.repayPerMouthPriceArrAc[i]
-        + '(<span class="detail-capital">' + repayPerMouthObj.repayPerMouthObjAc.restCapitalArrAc[i]
+        + '(<span class="detail-capital">' + formatFloat(repayCapitalPerMouthAc, 2)
         + '</span>/<span class="detail-interest">' + repayPerMouthObj.repayPerMouthObjAc.repayInterestPerMouthArrAc[i]
-        + '</span>)</td><td>' + repayPerMouthObj.repayPerMouthObjAi.restCapitalArrAi[i] + '</td><td>' 
+        + '</span>)</td><td>' + repayPerMouthObj.repayPerMouthObjAi.restCapitalArrAi[i] + '</td><td>'
         + repayPerMouthObj.repayPerMouthObjAc.restCapitalArrAc[i] + '</td><td>'
         + repayPerMouthObj.repayPerMouthObjAi.totalRepayedArrAi[i] + '</td><td>'
         + repayPerMouthObj.repayPerMouthObjAc.totalRepayedArrAc[i] + '</td></tr>'
@@ -176,4 +187,3 @@ $(document).ready(function () {
     }
   });
 });
-
