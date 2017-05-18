@@ -1,15 +1,28 @@
+body{
+  background-color: #F1F5F8;
+}
 .container {
-  width: 600px;
+  width: 900px;
+  margin: 0 auto;
+}
+.side-bar{
+  float: left;
+}
+.main {
+  float: left;
+  text-align: center;
   margin: 0 auto;
 }
 .detail table {
+  width: 800px;
+  margin: 0 auto;
   border-spacing: 0;
 }
 .detail table th, .detail table td {
   border: 1px solid #000;
   padding: 2px;
 }
-.detail-capital {
+.detail-principal {
   color: darkgreen;
 }
 .detail-interest {

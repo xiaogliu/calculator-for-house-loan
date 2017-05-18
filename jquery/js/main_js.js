@@ -3,7 +3,7 @@
 /**
  * 等额本金、等额本息还款方式详细对比
  * 带有Ai后缀为等额本息还款方式，即average interest
- * 带有Ac后缀为等额本金还款方式，即average capital
+ * 带有Ap后缀为等额本金还款方式，即average principal
  */
 
 // 格式化金额，保留两位小数
@@ -55,17 +55,17 @@ $(document).ready(function () {
       // 等额本息
       repayPerMouthObjAi: {
         repayInterestPerMouthArrAi: [],
-        repayCapitalPerMouthArrAi: [],
-        restCapitalArrAi: [],
+        repayPrincipalPerMouthArrAi: [],
+        balanceArrAi: [],
         totalRepayedArrAi: [],
       },
 
       // 等额本金
-      repayPerMouthObjAc: {
-        repayInterestPerMouthArrAc: [],
-        repayPerMouthPriceArrAc: [],
-        restCapitalArrAc: [],
-        totalRepayedArrAc: [],
+      repayPerMouthObjAp: {
+        repayInterestPerMouthArrAp: [],
+        repayPerMouthPriceArrAp: [],
+        balanceArrAp: [],
+        totalRepayedArrAp: [],
       },
     };
 
@@ -73,27 +73,27 @@ $(document).ready(function () {
     let repayPerMouthPriceAi = loanFormula.getRepayPerMouthPriceAi(loanTotalPrice, interestRatePerMouth, totalMouths);
 
     // 等额本息初始化剩余待还本金
-    let restCapitalPerMouthAi = loanTotalPrice;
+    let balancePerMouthAi = loanTotalPrice;
 
     // 等额本息初始化已还总金额
     let totalRepayedPerMouthAi = 0;
 
     // 等额本金每月需还利息、本金、剩余待还本金、已还总金额
-    let repayPerMouthObjAc = {
-      repayInterestPerMouthArrAc: [],
-      repayPerMouthPriceArrAc: [],
-      restCapitalArrAc: [],
-      totalRepayedArrAc: [],
+    let repayPerMouthObjAp = {
+      repayInterestPerMouthArrAp: [],
+      repayPerMouthPriceArrAp: [],
+      balanceArrAp: [],
+      totalRepayedArrAp: [],
     };
 
     // 等额本金每月还款本金
-    let repayCapitalPerMouthAc = loanTotalPrice / totalMouths;
+    let repayPrincipalPerMouthAp = loanTotalPrice / totalMouths;
 
     // 等额本息初始化剩余待还本金
-    let restCapitalPerMouthAc = loanTotalPrice;
+    let balancePerMouthAp = loanTotalPrice;
 
     // 等额本金初始化已还总金额
-    let totalRepayedPerMouthAc = 0;
+    let totalRepayedPerMouthAp = 0;
 
     const getRepayPerMouthObj = function () {
       for(let i = 0; i < totalMouths; i++) {
@@ -101,37 +101,37 @@ $(document).ready(function () {
         let repayInterestPerMouthAi = loanFormula.getRepayInterestPerMouthAi(i, loanTotalPrice, interestRatePerMouth, totalMouths);
 
         // 等额本息第(i+1)个月需还本金：月均还本带息 - 利息部分
-        let repayCapitalPerMouthAi = repayPerMouthPriceAi - repayInterestPerMouthAi;
+        let repayPrincipalPerMouthAi = repayPerMouthPriceAi - repayInterestPerMouthAi;
 
         // 等额本息第(i+1)个月待还本金：第i个月剩余待还本金 - 第(i + 1)个月所还本金，即上月剩余待还本金 - 当月已还本金
-        restCapitalPerMouthAi = restCapitalPerMouthAi - repayCapitalPerMouthAi;
+        balancePerMouthAi = balancePerMouthAi - repayPrincipalPerMouthAi;
 
         // 等额本息第(i+1)个月已还总金额
         totalRepayedPerMouthAi = totalRepayedPerMouthAi + repayPerMouthPriceAi;
 
         // 拼接等额本息数组，包括各月份需还利息、本金及剩余待还本金
         repayPerMouthObj.repayPerMouthObjAi.repayInterestPerMouthArrAi.push(formatFloat(repayInterestPerMouthAi, 2));
-        repayPerMouthObj.repayPerMouthObjAi.repayCapitalPerMouthArrAi.push(formatFloat(repayCapitalPerMouthAi, 2));
-        repayPerMouthObj.repayPerMouthObjAi.restCapitalArrAi.push(formatFloat(restCapitalPerMouthAi, 2));
+        repayPerMouthObj.repayPerMouthObjAi.repayPrincipalPerMouthArrAi.push(formatFloat(repayPrincipalPerMouthAi, 2));
+        repayPerMouthObj.repayPerMouthObjAi.balanceArrAi.push(formatFloat(balancePerMouthAi, 2));
         repayPerMouthObj.repayPerMouthObjAi.totalRepayedArrAi.push(formatFloat(totalRepayedPerMouthAi, 2));
 
         // 等额本金第(i+1)个月需还利息
-        let repayInterestPerMouthAc = loanTotalPrice * interestRatePerMouth * (1 - (i - 1) / totalMouths);
+        let repayInterestPerMouthAp = loanTotalPrice * interestRatePerMouth * (1 - (i - 1) / totalMouths);
 
         // 等额本金第(i+1)个月还本带息
-        let repayPerMouthPriceAc = repayCapitalPerMouthAc + repayInterestPerMouthAc;
+        let repayPerMouthPriceAp = repayPrincipalPerMouthAp + repayInterestPerMouthAp;
 
         // 等额本金第(i+1)个月剩余待还本金
-        restCapitalPerMouthAc = restCapitalPerMouthAc - repayCapitalPerMouthAc;
+        balancePerMouthAp = balancePerMouthAp - repayPrincipalPerMouthAp;
 
         // 等额本金第(i+1)个月总还本带息
-        totalRepayedPerMouthAc = totalRepayedPerMouthAc + repayPerMouthPriceAc;
+        totalRepayedPerMouthAp = totalRepayedPerMouthAp + repayPerMouthPriceAp;
 
         // 拼接等额本金数组，包括各月份需还利息、本金及剩余待还本金
-        repayPerMouthObj.repayPerMouthObjAc.repayInterestPerMouthArrAc.push(formatFloat(repayInterestPerMouthAc, 2));
-        repayPerMouthObj.repayPerMouthObjAc.repayPerMouthPriceArrAc.push(formatFloat(repayPerMouthPriceAc, 2));
-        repayPerMouthObj.repayPerMouthObjAc.restCapitalArrAc.push(formatFloat(restCapitalPerMouthAc, 2));
-        repayPerMouthObj.repayPerMouthObjAc.totalRepayedArrAc.push(formatFloat(totalRepayedPerMouthAc, 2));
+        repayPerMouthObj.repayPerMouthObjAp.repayInterestPerMouthArrAp.push(formatFloat(repayInterestPerMouthAp, 2));
+        repayPerMouthObj.repayPerMouthObjAp.repayPerMouthPriceArrAp.push(formatFloat(repayPerMouthPriceAp, 2));
+        repayPerMouthObj.repayPerMouthObjAp.balanceArrAp.push(formatFloat(balancePerMouthAp, 2));
+        repayPerMouthObj.repayPerMouthObjAp.totalRepayedArrAp.push(formatFloat(totalRepayedPerMouthAp, 2));
       }
       return repayPerMouthObj;
     };
@@ -155,8 +155,8 @@ $(document).ready(function () {
         '<table>' +
           '<tr>' +
             '<th>月份</th>' +
-            '<th>等额本息月供金额（<span class="detail-capital">本金</span>/<span class="detail-interest">利息</span>）</th>' +
-            '<th>等额本金月供金额（<span class="detail-capital">本金</span>/<span class="detail-interest">利息</span>）</th> ' +
+            '<th>等额本息月供金额（<span class="detail-principal">本金</span>/<span class="detail-interest">利息</span>）</th>' +
+            '<th>等额本金月供金额（<span class="detail-principal">本金</span>/<span class="detail-interest">利息</span>）</th> ' +
             '<th>等额本息剩余本金</th>' +
             ' <th>等额本金剩余本金</th>' +
             ' <th>等额本息已还总额</th>' +
@@ -174,15 +174,15 @@ $(document).ready(function () {
 
       detailTable.append(
         '<tr><td>' + (i%12 + 1) + '</td><td>' + formatFloat(repayPerMouthPriceAi, 2)
-        + '(<span class="detail-capital">' + repayPerMouthObj.repayPerMouthObjAi.repayCapitalPerMouthArrAi[i]
+        + '(<span class="detail-principal">' + repayPerMouthObj.repayPerMouthObjAi.repayPrincipalPerMouthArrAi[i]
         + '</span>/<span class="detail-interest">' + repayPerMouthObj.repayPerMouthObjAi.repayInterestPerMouthArrAi[i]
-        + '</span>)</td><td>' + repayPerMouthObj.repayPerMouthObjAc.repayPerMouthPriceArrAc[i]
-        + '(<span class="detail-capital">' + formatFloat(repayCapitalPerMouthAc, 2)
-        + '</span>/<span class="detail-interest">' + repayPerMouthObj.repayPerMouthObjAc.repayInterestPerMouthArrAc[i]
-        + '</span>)</td><td>' + repayPerMouthObj.repayPerMouthObjAi.restCapitalArrAi[i] + '</td><td>'
-        + repayPerMouthObj.repayPerMouthObjAc.restCapitalArrAc[i] + '</td><td>'
+        + '</span>)</td><td>' + repayPerMouthObj.repayPerMouthObjAp.repayPerMouthPriceArrAp[i]
+        + '(<span class="detail-principal">' + formatFloat(repayPrincipalPerMouthAp, 2)
+        + '</span>/<span class="detail-interest">' + repayPerMouthObj.repayPerMouthObjAp.repayInterestPerMouthArrAp[i]
+        + '</span>)</td><td>' + repayPerMouthObj.repayPerMouthObjAi.balanceArrAi[i] + '</td><td>'
+        + repayPerMouthObj.repayPerMouthObjAp.balanceArrAp[i] + '</td><td>'
         + repayPerMouthObj.repayPerMouthObjAi.totalRepayedArrAi[i] + '</td><td>'
-        + repayPerMouthObj.repayPerMouthObjAc.totalRepayedArrAc[i] + '</td></tr>'
+        + repayPerMouthObj.repayPerMouthObjAp.totalRepayedArrAp[i] + '</td></tr>'
         )
     }
   });
