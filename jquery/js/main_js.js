@@ -48,6 +48,17 @@ $(document).ready(function () {
   const detailBtn = $('.detail-btn');
   const detail = $('.detail');
   const hideDetailBtn = $('.hide-detail-btn');
+  const navAi = $('.nav-ai');
+  const navAp = $('.nav-ap');
+  const navCompare = $('.nav-compare');
+  const averageInterest = $('.average-interest');
+  const averagePrinciple = $('.average-principal');
+  const compare = $('.compare');
+
+  // 默认显示等额本息
+  averageInterest.addClass('nav-active');
+
+  // 计算所需数据
   $('.calculate').click(function () {
     let loanTotal = $('.totalPrice').val() * $('.proportion').val() / 10;
     let interestRatePerMou = $('.interest').val() / 12 / 100;
@@ -152,7 +163,6 @@ $(document).ready(function () {
 
     // 等额本金总还款利息： 总还本带息 - 总贷款额
     const totalInterestAp = totalRepayPriceAp - loanTotal;
-    
 
     // 等额本金
     $('.total-interest-ap').html(formatFloat(totalInterestAp, 2));
@@ -165,42 +175,107 @@ $(document).ready(function () {
     hideDetailBtn.css('display', 'none');
     detail.css('display', 'none');
 
-    // 拼接每月还款明细：每月还款本金、利息及待还本金
-    let detailTable = $('.detail table');
-    detailTable.html('' +
+    // 拼接等额本息每月还款明细：每月还款本金、利息及待还本金
+    let detailTableAi = $('.detail-table-ai');
+    detailTableAi.html('' +
         '<table>' +
-          '<tr>' +
+          '<tr class="table-head">' +
             '<th>月份</th>' +
-            '<th>等额本息月供金额（<span class="detail-principal">本金</span>/<span class="detail-interest">利息</span>）</th>' +
-            '<th>等额本金月供金额（<span class="detail-principal">本金</span>/<span class="detail-interest">利息</span>）</th> ' +
-            '<th>等额本息剩余本金</th>' +
-            ' <th>等额本金剩余本金</th>' +
-            ' <th>等额本息已还总额</th>' +
-            ' <th>等额本金已还总额</th>' +
+            '<th>月供本息</th>' +
+            '<th>月供本金</th>' +
+            '<th>月供利息</th>' +
+            '<th>剩余本金</th>' +
+            '<th>已还总额</th>' +
           ' </tr>' +
         ' </table>'); // 每次计算前清空数据
 
     for(let i = 0; i < repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi.length; i++) {
 
       if((i%12 + 1) === 1) {
-        detailTable.append(
-          '<tr><td>第' + (parseInt(i/12) + 1) + '年</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'
+        detailTableAi.append(
+          '<tr><td>第' + (parseInt(i/12) + 1) + '年</td></tr>'
           )
       }
 
-      detailTable.append(
-        '<tr><td>' + (i%12 + 1) + '</td><td>' + formatFloat(repayPerMouAi, 2)
-        + '(<span class="detail-principal">' + repayPerMouObj.repayPerMouObjAi.repayPrincipalPerMouArrAi[i]
-        + '</span>/<span class="detail-interest">' + repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi[i]
-        + '</span>)</td><td>' + repayPerMouObj.repayPerMouObjAp.repayPerMouPriceArrAp[i]
-        + '(<span class="detail-principal">' + formatFloat(repayPrincipalPerMouAp, 2)
-        + '</span>/<span class="detail-interest">' + repayPerMouObj.repayPerMouObjAp.repayInterestPerMouArrAp[i]
-        + '</span>)</td><td>' + repayPerMouObj.repayPerMouObjAi.balanceArrAi[i] + '</td><td>'
-        + repayPerMouObj.repayPerMouObjAp.balanceArrAp[i] + '</td><td>'
-        + repayPerMouObj.repayPerMouObjAi.totalRepayedArrAi[i] + '</td><td>'
-        + repayPerMouObj.repayPerMouObjAp.totalRepayedArrAp[i] + '</td></tr>'
+      detailTableAi.append(
+        '<tr class="table-data">' +
+         '<td>' + (i%12 + 1) + '</td>' +
+         '<td>' + formatFloat(repayPerMouAi, 2) + '</td>' +
+         '<td>' + repayPerMouObj.repayPerMouObjAi.repayPrincipalPerMouArrAi[i] + '</td>' +
+         '<td>' + repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi[i] + '</td>' +
+         '<td>' + repayPerMouObj.repayPerMouObjAi.balanceArrAi[i] + '</td>' +
+         '<td>' + repayPerMouObj.repayPerMouObjAi.totalRepayedArrAi[i] + '</td>' +
+        '</tr>'
         )
     }
+
+    // 拼接等额本金每月还款明细：每月还款本金、利息及待还本金
+    let detailTableAp = $('.detail-table-ap');
+    detailTableAp.html('' +
+        '<table>' +
+          '<tr class="table-head">' +
+            '<th>月份</th>' +
+            '<th>月供本息</th>' +
+            '<th>月供本金</th>' +
+            '<th>月供利息</th>' +
+            '<th>剩余本金</th>' +
+            '<th>已还总额</th>' +
+          ' </tr>' +
+        ' </table>'); // 每次计算前清空数据
+
+    for(let i = 0; i < repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi.length; i++) {
+
+      if((i%12 + 1) === 1) {
+        detailTableAp.append(
+          '<tr><td>第' + (parseInt(i/12) + 1) + '年</td></tr>'
+          )
+      }
+
+      detailTableAp.append(
+        '<tr class="table-data">' +
+          '<td>' + (i%12 + 1) + '</td>' +
+          // '<td>' + repayPerMouObj.repayPerMouObjAp.repayPerMouPriceArrAp[i] + '(<span class="detail-principal">'
+          //   + formatFloat(repayPrincipalPerMouAp, 2) + '</span>/<span class="detail-interest">'
+          //   + repayPerMouObj.repayPerMouObjAp.repayInterestPerMouArrAp[i] + '</span>)' +
+          // '</td>' +
+          '<td>' + repayPerMouObj.repayPerMouObjAp.repayPerMouPriceArrAp[i] + '</td>' +
+          '<td>' + formatFloat(repayPrincipalPerMouAp, 2) + '</td>' +
+          '<td>' + repayPerMouObj.repayPerMouObjAp.repayInterestPerMouArrAp[i] + '</td>' +
+          '<td>' + repayPerMouObj.repayPerMouObjAp.balanceArrAp[i] + '</td>' +
+          '<td>' + repayPerMouObj.repayPerMouObjAp.totalRepayedArrAp[i] + '</td>' +
+        '</tr>'
+        )
+    }
+  });
+
+  // sidebar选择
+  navAi.click(function () {
+    averageInterest.css('display', 'block');
+    averagePrinciple.css('display', 'none');
+    compare.css('display', 'none');
+    navAi.addClass('nav-active');
+    navAp.removeClass('nav-active');
+    navCompare.removeClass('nav-active');
+  });
+
+  // sidebar选择
+  navAp.click(function () {
+    averageInterest.css('display', 'none');
+    averagePrinciple.css('display', 'block');
+    compare.css('display', 'none');
+    navAi.removeClass('nav-active');
+    navAp.addClass('nav-active');
+    navCompare.removeClass('nav-active');
+  });
+
+  // sidebar选择
+  navCompare.click(function () {
+    averageInterest.css('display', 'none');
+    averagePrinciple.css('display', 'none');
+    compare.css('display', 'block');
+    navAi.removeClass('nav-active');
+    navAp.removeClass('nav-active');
+    navCompare.addClass('nav-active');
   });
 
   // 展示明细
@@ -209,7 +284,7 @@ $(document).ready(function () {
     hideDetailBtn.css('display', 'block');
     detailBtn.css('display', 'none');
   });
-  
+
   // 隐藏明细
   hideDetailBtn.click(function () {
     detail.css('display', 'none');

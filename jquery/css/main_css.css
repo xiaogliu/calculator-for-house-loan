@@ -1,5 +1,6 @@
 body {
   font-size: 14px;
+  color: #404245;
   background-color: #F1F5F8;
 }
 input {
@@ -17,13 +18,17 @@ input {
   width: 20%;
   float: left;
 }
-.side-bar .active{
+.side-bar .nav-active {
   color: #0091ff;
 }
 .side-bar ul li {
   height: 50px;
   line-height: 50px;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid #d1d7db;
+}
+.side-bar ul li:hover {
+  cursor: pointer;
+  color: #0091ff;
 }
 .main {
   width: 75%;
@@ -31,6 +36,9 @@ input {
   float: left;
   padding-left: 5%;
   text-align: left;
+}
+.main .average-principal, .main .compare {
+  display: none;
 }
 .main p {
   height: 30px;
@@ -71,20 +79,35 @@ input {
   margin: 0 3px;
   font-size: 1.5em;
 }
-.main .detail, .main .hide-detail-btn {
+.main .detail{
+  display: none;
+  height: 360px;
+  overflow-y: scroll;
+}
+.main .hide-detail-btn {
   display: none;
 }
 .main .detail table {
+  width: 100%;
   margin: 0 auto;
   text-align: center;
   border-spacing: 0;
 }
-.main .detail table th {
+.main .detail table .table-head {
+  /*width: 631px;*/
   background-color: #0091ff;
 }
-.main .detail table th, .main .detail table td {
-  border: 1px solid #000;
+.main .detail table th {
+  height: 30px;
+  /*width: 16.66%;*/
   padding: 2px;
+  color: #fff;
+  border-bottom: 1px solid #e6e6e6;
+}
+.main .detail table td {
+  /*width: 16.66%;*/
+  padding: 2px;
+  border-bottom: 1px solid #e6e6e6;
 }
 .main .detail-principal {
   color: darkgreen;

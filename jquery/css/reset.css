@@ -12,6 +12,7 @@ fieldset,img{border:none;}
 button,input,select,textarea{font-size:100%;border: none;}
 button{outline:none;cursor:pointer;}
 table{border-collapse:collapse;border-spacing:0;}
+th{font-weight: normal;}
 hr{border:none; height:1px;}
 html{overflow-y:scroll;}
 img{max-width: 100%;}
