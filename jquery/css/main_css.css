@@ -1,22 +1,43 @@
 body{
+  font-size: 14px;
   background-color: #F1F5F8;
 }
 .container {
   width: 900px;
   margin: 0 auto;
+  padding: 20px 0;
 }
 .side-bar{
+  width: 20%;
   float: left;
+}
+.side-bar ul li {
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #555;
 }
 .main {
+  width: 75%;
   float: left;
-  text-align: center;
+  padding-left: 5%;
+  text-align: left;
   margin: 0 auto;
 }
+.main .input, .main .output, .main .detail {
+  margin-bottom: 5%;
+  padding: 2%;
+  background-color: #fff;
+}
+.main .input .calculate {
+  background-color: #3ddb93;
+}
 .detail table {
-  width: 800px;
   margin: 0 auto;
+  text-align: center;
   border-spacing: 0;
+}
+.detail table th {
+  background-color: #0091ff;
 }
 .detail table th, .detail table td {
   border: 1px solid #000;
