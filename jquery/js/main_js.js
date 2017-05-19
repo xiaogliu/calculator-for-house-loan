@@ -45,6 +45,9 @@ const loanFormula = {
 
 
 $(document).ready(function () {
+  const detailBtn = $('.detail-btn');
+  const detail = $('.detail');
+  const hideDetailBtn = $('.hide-detail-btn');
   $('.calculate').click(function () {
     let loanTotalPrice = $('.totalPrice').val() * $('.proportion').val() / 10;
     let interestRatePerMouth = $('.interest').val() / 12 / 100;
@@ -77,14 +80,6 @@ $(document).ready(function () {
 
     // 等额本息初始化已还总金额
     let totalRepayedPerMouthAi = 0;
-
-    // 等额本金每月需还利息、本金、剩余待还本金、已还总金额
-    let repayPerMouthObjAp = {
-      repayInterestPerMouthArrAp: [],
-      repayPerMouthPriceArrAp: [],
-      balanceArrAp: [],
-      totalRepayedArrAp: [],
-    };
 
     // 等额本金每月还款本金
     let repayPrincipalPerMouthAp = loanTotalPrice / totalMouths;
@@ -149,6 +144,11 @@ $(document).ready(function () {
     $('.total-repay-ai').html(formatFloat(totalRepayPriceAi, 2));
     $('.repay-per-mouth-ai').html(formatFloat(repayPerMouthPriceAi, 2));
 
+    // 展示明细按钮
+    detailBtn.css('display', 'block');
+    hideDetailBtn.css('display', 'none');
+    detail.css('display', 'none');
+
     // 拼接每月还款明细：每月还款本金、利息及待还本金
     let detailTable = $('.detail table');
     detailTable.html('' +
@@ -185,5 +185,19 @@ $(document).ready(function () {
         + repayPerMouthObj.repayPerMouthObjAp.totalRepayedArrAp[i] + '</td></tr>'
         )
     }
+  });
+
+  // 展示明细
+  detailBtn.click(function () {
+    detail.css('display', 'block');
+    hideDetailBtn.css('display', 'block');
+    detailBtn.css('display', 'none');
+  });
+  
+  // 隐藏明细
+  hideDetailBtn.click(function () {
+    detail.css('display', 'none');
+    detailBtn.css('display', 'block');
+    hideDetailBtn.css('display', 'none');
   });
 });

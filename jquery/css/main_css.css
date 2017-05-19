@@ -1,6 +1,12 @@
-body{
+body {
   font-size: 14px;
   background-color: #F1F5F8;
+}
+input {
+  padding: 1px;
+  margin-right: 3px;
+  border: 1px solid #aaa;
+  border-radius: 2px;
 }
 .container {
   width: 900px;
@@ -11,6 +17,9 @@ body{
   width: 20%;
   float: left;
 }
+.side-bar .active{
+  color: #0091ff;
+}
 .side-bar ul li {
   height: 50px;
   line-height: 50px;
@@ -18,34 +27,65 @@ body{
 }
 .main {
   width: 75%;
+  margin: 0 auto;
   float: left;
   padding-left: 5%;
   text-align: left;
-  margin: 0 auto;
+}
+.main p {
+  height: 30px;
+  line-height: 30px;
 }
 .main .input, .main .output, .main .detail {
-  margin-bottom: 5%;
+  margin-bottom: 2%;
   padding: 2%;
   background-color: #fff;
+  border-radius: 5px;
 }
 .main .input .calculate {
+  width: 70px;
+  height: 30px;
+  margin: 5px 0;
+  color: #fff;
   background-color: #3ddb93;
+  border-radius: 5px;
 }
-.detail table {
+.main .output .detail-btn, .main .hide-detail-btn {
+  display: none;
+  width: 90px;
+  height: 36px;
+  margin: 5px 0;
+  color: #fff;
+  background-color: #3ddb93;
+  border-radius: 5px;
+}
+.main .input span, .main .output .category {
+  display: inline-block;
+  width: 75px;
+  text-align: right;
+}
+.main .total-loan, .main .total-interest-ai, .main .total-repay-ai, .main .repay-per-mouth-ai {
+  margin-right: 3px;
+  font-size: 1.5em;
+}
+.main .detail, .main .hide-detail-btn {
+  display: none;
+}
+.main .detail table {
   margin: 0 auto;
   text-align: center;
   border-spacing: 0;
 }
-.detail table th {
+.main .detail table th {
   background-color: #0091ff;
 }
-.detail table th, .detail table td {
+.main .detail table th, .main .detail table td {
   border: 1px solid #000;
   padding: 2px;
 }
-.detail-principal {
+.main .detail-principal {
   color: darkgreen;
 }
-.detail-interest {
+.main .detail-interest {
   color: deeppink;
 }
