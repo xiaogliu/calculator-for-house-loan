@@ -57,34 +57,47 @@
       <!--</p>-->
       <button class="calculate">计算</button>
     </div>
-    <div class="output">
-      <p>
-        <span class="category">贷款总额：</span><span class="total-loan">0</span>元
-      </p>
-      <p>
-        <span class="category">支付利息：</span><span class="total-interest-ai">0</span>元
-      </p>
-      <p>
-        <span class="category">还款总额：</span><span class="total-repay-ai">0</span>元
-      </p>
-      <p>
-        <span class="category">月供：</span><span class="repay-per-mouth-ai">0</span>元
-      </p>
-      <button class="detail-btn">展示明细</button>
-      <button class="hide-detail-btn">隐藏明细</button>
+    <div class="average-interest">
+      <div class="output">
+        <p>
+          <span class="category">贷款总额：</span><span class="total-loan">0</span>元
+        </p>
+        <p>
+          <span class="category">支付利息：</span><span class="total-interest-ai">0</span>元
+        </p>
+        <p>
+          <span class="category">还款总额：</span><span class="total-repay-ai">0</span>元
+        </p>
+        <p>
+          <span class="category">月供：</span><span class="repay-per-mouth-ai">0</span>元
+        </p>
+        <button class="detail-btn">展示明细</button>
+        <button class="hide-detail-btn">隐藏明细</button>
+      </div>
+      <div class="detail">
+        <table></table>
+      </div>
     </div>
-    <div class="detail">
-      <table>
-        <!--<tr>-->
-        <!--<th>月份</th>-->
-        <!--<th>等额本息月供金额（<span class="detail-capital">本金</span>/<span class="detail-interest">利息</span>）</th>-->
-        <!--<th>等额本金月供金额（<span class="detail-capital">本金</span>/<span class="detail-interest">利息</span>）</th>-->
-        <!--<th>等额本息剩余本金</th>-->
-        <!--<th>等额本金剩余本金</th>-->
-        <!--<th>等额本息已还总额</th>-->
-        <!--<th>等额本金已还总额</th>-->
-        <!--</tr>-->
-      </table>
+    <div class="average-principal">
+      <div class="output">
+        <p>
+          <span class="category">贷款总额：</span><span class="total-loan">0</span>元
+        </p>
+        <p>
+          <span class="category">支付利息：</span><span class="total-interest-ap">0</span>元
+        </p>
+        <p>
+          <span class="category">还款总额：</span><span class="total-repay-ap">0</span>元
+        </p>
+        <p>
+          <span class="category">月供：</span>第一个月还款<span class="repay-per-mouth-ap">0</span>元，后逐月递减<span class="decrease-per-mouth-ap">0</span>元
+        </p>
+        <button class="detail-btn">展示明细</button>
+        <button class="hide-detail-btn">隐藏明细</button>
+      </div>
+      <div class="detail">
+        <table></table>
+      </div>
     </div>
   </div>
   <div class="float-fix"></div>
