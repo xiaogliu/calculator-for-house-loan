@@ -23,7 +23,7 @@ const loanFormula = {
      * 每月还款金额 = [总贷款 × 月利率 × (1 + 月利率)^总月数] ÷ [(1 + 月利率)^总月数 - 1]
      */
 
-    // 简化公式，创建变量x
+        // 简化公式，创建变量x
     let x = Math.pow((1 + interestRatePerMou), totalMouths);
 
     return (loanTotal * interestRatePerMou * x / (x - 1));
@@ -36,7 +36,7 @@ const loanFormula = {
      * 第i个月还款中利息部分 = 总贷款 × 月利率 × {(1 + 月利率)^i - (1 + 月利率)^总月数 * [(1 + 月利率)^i - 1] ÷ [(1 + 月利率)^总月数 - 1]}
      */
 
-    // 简化公式，创建变量x、y
+        // 简化公式，创建变量x、y
     let [x, y] = [Math.pow((1 + interestRatePerMou), i), Math.pow((1 + interestRatePerMou), totalMouths)];
 
     return (loanTotal * interestRatePerMou * (x - y * (x - 1) / (y - 1)));
@@ -184,20 +184,20 @@ $(document).ready(function () {
 
       if((i%12 + 1) === 1) {
         detailTbodyAi.append(
-          '<tr><td>第' + (parseInt(i/12) + 1) + '年</td></tr>'
-          )
+            '<tr><td class="table-year">第' + (parseInt(i/12) + 1) + '年</td></tr>'
+        )
       }
 
       detailTbodyAi.append(
-        '<tr>' +
-         '<td>' + (i%12 + 1) + '</td>' +
-         '<td>' + formatFloat(repayPerMouAi, 2) + '</td>' +
-         '<td>' + repayPerMouObj.repayPerMouObjAi.repayPrincipalPerMouArrAi[i] + '</td>' +
-         '<td>' + repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi[i] + '</td>' +
-         '<td>' + repayPerMouObj.repayPerMouObjAi.balanceArrAi[i] + '</td>' +
-         '<td>' + repayPerMouObj.repayPerMouObjAi.totalRepayedArrAi[i] + '</td>' +
-        '</tr>'
-        )
+          '<tr>' +
+          '<td>' + (i%12 + 1) + '</td>' +
+          '<td>' + formatFloat(repayPerMouAi, 2) + '</td>' +
+          '<td>' + repayPerMouObj.repayPerMouObjAi.repayPrincipalPerMouArrAi[i] + '</td>' +
+          '<td>' + repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi[i] + '</td>' +
+          '<td>' + repayPerMouObj.repayPerMouObjAi.totalRepayedArrAi[i] + '</td>' +
+          '<td>' + repayPerMouObj.repayPerMouObjAi.balanceArrAi[i] + '</td>' +
+          '</tr>'
+      )
     }
 
     // 拼接等额本金每月还款明细：每月还款本金、利息及待还本金
@@ -209,20 +209,20 @@ $(document).ready(function () {
 
       if((i%12 + 1) === 1) {
         detailTbodyAp.append(
-          '<tr><td>第' + (parseInt(i/12) + 1) + '年</td></tr>'
-          )
+            '<tr><td class="table-year">第' + (parseInt(i/12) + 1) + '年</td></tr>'
+        )
       }
 
       detailTbodyAp.append(
-        '<tr>' +
+          '<tr>' +
           '<td>' + (i%12 + 1) + '</td>' +
           '<td>' + repayPerMouObj.repayPerMouObjAp.repayPerMouPriceArrAp[i] + '</td>' +
           '<td>' + formatFloat(repayPrincipalPerMouAp, 2) + '</td>' +
           '<td>' + repayPerMouObj.repayPerMouObjAp.repayInterestPerMouArrAp[i] + '</td>' +
-          '<td>' + repayPerMouObj.repayPerMouObjAp.balanceArrAp[i] + '</td>' +
           '<td>' + repayPerMouObj.repayPerMouObjAp.totalRepayedArrAp[i] + '</td>' +
-        '</tr>'
-        )
+          '<td>' + repayPerMouObj.repayPerMouObjAp.balanceArrAp[i] + '</td>' +
+          '</tr>'
+      )
     }
   });
 

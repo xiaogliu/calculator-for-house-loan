@@ -57,6 +57,8 @@
       <!--</p>-->
       <button class="calculate">计算</button>
     </div>
+
+    <!-- 等额本息 begin -->
     <div class="average-interest">
       <div class="output">
         <p>
@@ -83,8 +85,8 @@
               <th>月供本息</th>
               <th>月供本金</th>
               <th>月供利息</th>
+              <th>已还本息</th>
               <th>剩余本金</th>
-              <th>已还总额</th>
             </tr>
             </thead>
             <tbody class="detail-tbody detail-tbody-ai"></tbody>
@@ -92,6 +94,9 @@
         </div>
       </div>
     </div>
+    <!-- 等额本息 end -->
+
+    <!-- 等额本金 begin -->
     <div class="average-principal">
       <div class="output">
         <p>
@@ -118,8 +123,8 @@
               <th>月供本息</th>
               <th>月供本金</th>
               <th>月供利息</th>
+              <th>已还本息</th>
               <th>剩余本金</th>
-              <th>已还总额</th>
             </tr>
             </thead>
             <tbody class="detail-tbody detail-tbody-ap"></tbody>
@@ -127,14 +132,29 @@
         </div>
       </div>
     </div>
+    <!-- 等额本金 end -->
+
+    <!-- 对比 begin -->
     <div class="compare">
       <div class="output">
-        这里是compare
+        <div class="table-container">
+          <table>
+            <thead class="detail-thead detail-thead-comp">
+            <tr>
+              <th>月份</th>
+              <th>等额本息已还本息</th>
+              <th>等额本金已还本息</th>
+              <th>等额本息剩余本金</th>
+              <th>等额本金剩余本金</th>
+            </tr>
+            </thead>
+            <tbody class="detail-tbody detail-tbody-comp"></tbody>
+          </table>
+        </div>
       </div>
-      <!--<div class="detail">-->
-      <!--<table class="detail-table-ap"></table>-->
-      <!--</div>-->
     </div>
+    <!-- 对比 end -->
+
   </div>
   <div class="float-fix"></div>
 </div>

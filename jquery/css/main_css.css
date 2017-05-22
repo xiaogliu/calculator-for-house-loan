@@ -82,52 +82,50 @@ input {
 .main .hide-detail-btn {
   display: none;
 }
-.main .detail .table-container {
+.table-container {
   height: 360px;
   overflow-y: scroll;
 }
-.main .detail table {
+table {
   width: 100%;
   margin: 0 auto;
   text-align: center;
   border-spacing: 0;
 }
-.main .detail table .detail-tbody {
+table .detail-tbody {
   display: block;
   margin-top: 34px;
 }
-.main .detail table .detail-tbody tr td {
+table .detail-tbody tr td {
   width: 113px;
+  padding: 2px;
+  border-bottom: 1px solid #e6e6e6;
 }
-.main .detail table .detail-tbody tr td:nth-child(1){
+table .detail-tbody tr td:nth-child(1){
   width: 64px;
 }
-.main .detail table .detail-thead {
+table .detail-thead {
   position: absolute;
   width: 631px;
   background-color: #0091ff;
 }
-.main .detail table .detail-thead th {
-  width: 113px;
-}
-.main .detail table .detail-thead th:nth-child(1){
-  width: 64px;
-}
-.main .detail table th {
+table .detail-thead th {
   height: 30px;
-  /*width: 16.66%;*/
+  width: 113px;
   padding: 2px;
   color: #fff;
-  border-bottom: 1px solid #e6e6e6;
 }
-.main .detail table td {
-  /*width: 16.66%;*/
-  padding: 2px;
-  border-bottom: 1px solid #e6e6e6;
+table .detail-thead th:nth-child(1){
+  width: 64px;
 }
-.main .detail-principal {
-  color: darkgreen;
+.compare table .detail-tbody tr td,
+.compare table .detail-thead th {
+  width: 135px;
 }
-.main .detail-interest {
-  color: deeppink;
+.compare table .detail-thead th:nth-child(1),
+.compare table .detail-tbody tr td:nth-child(1){
+  width: 64px;
+}
+.compare table .table-year {
+  height: 30px;
 }
