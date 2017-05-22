@@ -176,29 +176,20 @@ $(document).ready(function () {
     detail.css('display', 'none');
 
     // 拼接等额本息每月还款明细：每月还款本金、利息及待还本金
-    let detailTableAi = $('.detail-table-ai');
-    detailTableAi.html('' +
-        '<table>' +
-          '<tr class="table-head">' +
-            '<th>月份</th>' +
-            '<th>月供本息</th>' +
-            '<th>月供本金</th>' +
-            '<th>月供利息</th>' +
-            '<th>剩余本金</th>' +
-            '<th>已还总额</th>' +
-          ' </tr>' +
-        ' </table>'); // 每次计算前清空数据
+    let detailTbodyAi = $('.detail-tbody-ai');
+
+    detailTbodyAi.html(''); // 每次计算前清空数据
 
     for(let i = 0; i < repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi.length; i++) {
 
       if((i%12 + 1) === 1) {
-        detailTableAi.append(
+        detailTbodyAi.append(
           '<tr><td>第' + (parseInt(i/12) + 1) + '年</td></tr>'
           )
       }
 
-      detailTableAi.append(
-        '<tr class="table-data">' +
+      detailTbodyAi.append(
+        '<tr>' +
          '<td>' + (i%12 + 1) + '</td>' +
          '<td>' + formatFloat(repayPerMouAi, 2) + '</td>' +
          '<td>' + repayPerMouObj.repayPerMouObjAi.repayPrincipalPerMouArrAi[i] + '</td>' +
@@ -210,34 +201,21 @@ $(document).ready(function () {
     }
 
     // 拼接等额本金每月还款明细：每月还款本金、利息及待还本金
-    let detailTableAp = $('.detail-table-ap');
-    detailTableAp.html('' +
-        '<table>' +
-          '<tr class="table-head">' +
-            '<th>月份</th>' +
-            '<th>月供本息</th>' +
-            '<th>月供本金</th>' +
-            '<th>月供利息</th>' +
-            '<th>剩余本金</th>' +
-            '<th>已还总额</th>' +
-          ' </tr>' +
-        ' </table>'); // 每次计算前清空数据
+    let detailTbodyAp = $('.detail-tbody-ap');
+
+    detailTbodyAp.html(''); // 每次计算前清空数据
 
     for(let i = 0; i < repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi.length; i++) {
 
       if((i%12 + 1) === 1) {
-        detailTableAp.append(
+        detailTbodyAp.append(
           '<tr><td>第' + (parseInt(i/12) + 1) + '年</td></tr>'
           )
       }
 
-      detailTableAp.append(
-        '<tr class="table-data">' +
+      detailTbodyAp.append(
+        '<tr>' +
           '<td>' + (i%12 + 1) + '</td>' +
-          // '<td>' + repayPerMouObj.repayPerMouObjAp.repayPerMouPriceArrAp[i] + '(<span class="detail-principal">'
-          //   + formatFloat(repayPrincipalPerMouAp, 2) + '</span>/<span class="detail-interest">'
-          //   + repayPerMouObj.repayPerMouObjAp.repayInterestPerMouArrAp[i] + '</span>)' +
-          // '</td>' +
           '<td>' + repayPerMouObj.repayPerMouObjAp.repayPerMouPriceArrAp[i] + '</td>' +
           '<td>' + formatFloat(repayPrincipalPerMouAp, 2) + '</td>' +
           '<td>' + repayPerMouObj.repayPerMouObjAp.repayInterestPerMouArrAp[i] + '</td>' +

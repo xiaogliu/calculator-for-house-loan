@@ -81,11 +81,13 @@ input {
 }
 .main .detail{
   display: none;
-  height: 360px;
-  overflow-y: scroll;
 }
 .main .hide-detail-btn {
   display: none;
+}
+.main .detail .table-container {
+  height: 360px;
+  overflow-y: scroll;
 }
 .main .detail table {
   width: 100%;
@@ -93,9 +95,26 @@ input {
   text-align: center;
   border-spacing: 0;
 }
-.main .detail table .table-head {
-  /*width: 631px;*/
+.main .detail table .detail-tbody {
+  display: block;
+  margin-top: 34px;
+}
+.main .detail table .detail-tbody tr td {
+  width: 113px;
+}
+.main .detail table .detail-tbody tr td:nth-child(1){
+  width: 64px;
+}
+.main .detail table .detail-thead {
+  position: absolute;
+  width: 631px;
   background-color: #0091ff;
+}
+.main .detail table .detail-thead th {
+  width: 113px;
+}
+.main .detail table .detail-thead th:nth-child(1){
+  width: 64px;
 }
 .main .detail table th {
   height: 30px;
