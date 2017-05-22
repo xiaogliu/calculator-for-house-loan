@@ -72,6 +72,7 @@ $(document).ready(function () {
         repayPrincipalPerMouArrAi: [],
         balanceArrAi: [],
         totalRepayedArrAi: [],
+        totalRepayPerMouArrAi: [],
       },
 
       // 等额本金
@@ -80,6 +81,7 @@ $(document).ready(function () {
         repayPerMouPriceArrAp: [],
         balanceArrAp: [],
         totalRepayedArrAp: [],
+        totalRepayPerMouArrAp: [],
       },
     };
 
@@ -118,11 +120,15 @@ $(document).ready(function () {
         // 等额本息第(i+1)个月已还总金额
         totalRepayedPerMouAi = totalRepayedPerMouAi + repayPerMouAi;
 
+        // 等额本金第(i+1)个月若提前还款实际支付
+        let totalRepayPerMouAi = balancePerMouAi + totalRepayedPerMouAi;
+
         // 拼接等额本息数组，包括各月份需还利息、本金及剩余待还本金
         repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi.push(formatFloat(repayInterestPerMouAi, 2));
         repayPerMouObj.repayPerMouObjAi.repayPrincipalPerMouArrAi.push(formatFloat(repayPrincipalPerMouAi, 2));
         repayPerMouObj.repayPerMouObjAi.balanceArrAi.push(formatFloat(balancePerMouAi, 2));
         repayPerMouObj.repayPerMouObjAi.totalRepayedArrAi.push(formatFloat(totalRepayedPerMouAi, 2));
+        repayPerMouObj.repayPerMouObjAi.totalRepayPerMouArrAi.push(formatFloat(totalRepayPerMouAi, 2));
 
         // 等额本金第(i+1)个月需还利息
         let repayInterestPerMouAp = loanTotal * interestRatePerMou * (1 - (i - 1) / totalMouths);
@@ -136,11 +142,15 @@ $(document).ready(function () {
         // 等额本金第(i+1)个月总还本带息
         totalRepayedPerMouAp = totalRepayedPerMouAp + repayPerMouPriceAp;
 
+        // 等额本金第(i+1)个月若提前还款实际支付
+        let totalRepayPerMouAp = balancePerMouAp + totalRepayedPerMouAp;
+
         // 拼接等额本金数组，包括各月份需还利息、本金及剩余待还本金
         repayPerMouObj.repayPerMouObjAp.repayInterestPerMouArrAp.push(formatFloat(repayInterestPerMouAp, 2));
         repayPerMouObj.repayPerMouObjAp.repayPerMouPriceArrAp.push(formatFloat(repayPerMouPriceAp, 2));
         repayPerMouObj.repayPerMouObjAp.balanceArrAp.push(formatFloat(balancePerMouAp, 2));
         repayPerMouObj.repayPerMouObjAp.totalRepayedArrAp.push(formatFloat(totalRepayedPerMouAp, 2));
+        repayPerMouObj.repayPerMouObjAp.totalRepayPerMouArrAp.push(formatFloat(totalRepayPerMouAp, 2));
       }
       return repayPerMouObj;
     };
@@ -215,15 +225,39 @@ $(document).ready(function () {
 
       detailTbodyAp.append(
           '<tr>' +
-          '<td>' + (i%12 + 1) + '</td>' +
-          '<td>' + repayPerMouObj.repayPerMouObjAp.repayPerMouPriceArrAp[i] + '</td>' +
-          '<td>' + formatFloat(repayPrincipalPerMouAp, 2) + '</td>' +
-          '<td>' + repayPerMouObj.repayPerMouObjAp.repayInterestPerMouArrAp[i] + '</td>' +
-          '<td>' + repayPerMouObj.repayPerMouObjAp.totalRepayedArrAp[i] + '</td>' +
-          '<td>' + repayPerMouObj.repayPerMouObjAp.balanceArrAp[i] + '</td>' +
+            '<td>' + (i%12 + 1) + '</td>' +
+            '<td>' + repayPerMouObj.repayPerMouObjAp.repayPerMouPriceArrAp[i] + '</td>' +
+            '<td>' + formatFloat(repayPrincipalPerMouAp, 2) + '</td>' +
+            '<td>' + repayPerMouObj.repayPerMouObjAp.repayInterestPerMouArrAp[i] + '</td>' +
+            '<td>' + repayPerMouObj.repayPerMouObjAp.totalRepayedArrAp[i] + '</td>' +
+            '<td>' + repayPerMouObj.repayPerMouObjAp.balanceArrAp[i] + '</td>' +
           '</tr>'
       )
     }
+
+    // 等额本息/等额本金对比
+    let detailTbodyComp = $('.detail-tbody-comp');
+
+    detailTbodyComp.html(''); // 每次计算前清空数据
+
+    for(let i = 0; i < repayPerMouObj.repayPerMouObjAi.repayInterestPerMouArrAi.length; i++) {
+
+      if((i%12 + 1) === 1) {
+        detailTbodyComp.append(
+            '<tr><td class="table-year">第' + (parseInt(i/12) + 1) + '年</td></tr>'
+        )
+      }
+
+      detailTbodyComp.append(
+          '<tr>' +
+            '<td>' + (i%12 + 1) + '</td>' +
+            '<td>' + repayPerMouObj.repayPerMouObjAi.totalRepayedArrAi[i] + '/' + repayPerMouObj.repayPerMouObjAp.totalRepayedArrAp[i] + '</td>' +
+            '<td>' + repayPerMouObj.repayPerMouObjAi.balanceArrAi[i] + '/' + repayPerMouObj.repayPerMouObjAp.balanceArrAp[i] + '</td>' +
+            '<td>' + repayPerMouObj.repayPerMouObjAi.totalRepayPerMouArrAi[i] + '/' + repayPerMouObj.repayPerMouObjAp.totalRepayPerMouArrAp[i] + '</td>'+
+          '</tr>'
+      )
+    }
+
   });
 
   // sidebar选择
