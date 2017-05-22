@@ -72,10 +72,7 @@ input {
   width: 75px;
   text-align: right;
 }
-.main .total-loan, .main .total-interest-ai,
-.main .total-repay-ai, .main .repay-per-mouth-ai,
-.main .total-interest-ap,.main .total-repay-ap,
-.main .repay-per-mouth-ap, .main .decrease-per-mouth-ap {
+.main .output-numb {
   margin: 0 3px;
   font-size: 1.5em;
 }
