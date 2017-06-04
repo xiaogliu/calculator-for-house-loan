@@ -2,12 +2,37 @@ body {
   font-size: 14px;
   color: #404245;
   background-color: #F1F5F8;
+  font:12px/1.5 "Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";
 }
 input {
   padding: 1px;
   margin-right: 3px;
   border: 1px solid #aaa;
   border-radius: 2px;
+}
+ul {
+  list-style:none;
+}
+p {
+  margin: 0;
+  padding:0;
+}
+a {
+  color: #404245;
+  text-decoration:none;
+}
+button{
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.clear-fix :after {
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
 }
 .container {
   width: 900px;
@@ -24,6 +49,8 @@ input {
 .side-bar ul li {
   height: 50px;
   line-height: 50px;
+  margin: 0;
+  padding: 0;
   border-bottom: 1px solid #d1d7db;
 }
 .side-bar ul li:hover {
