@@ -11,9 +11,11 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+	background-color: #F1F5F8;
+}
 #app {
   width: 1000px;
-  margin: 0 auto;
-  background: #efefef;
+  margin: 30px auto;
 }
 </style>
