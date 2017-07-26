@@ -48,8 +48,10 @@
             totalRepayPerMouArrAp: [],
           },
         },
-        // 等额本金每月还款递减金额
-        decreasePerMouAp: 0,
+        // // 等额本金每月还款递减金额
+        // decreasePerMouAp: 0,
+        // 总贷款额度
+        // loanTotal: 0,
       };
     },
     methods: {
@@ -66,11 +68,12 @@
       // 等额本息第i个月还款中利息部分
       getRepayInterestPerMouAi(i, loanTotal, interestRatePerMou, totalMouths) {
         const [x, y] = [(1 + interestRatePerMou) ** i, (1 + interestRatePerMou) ** totalMouths];
-        return (loanTotal * interestRatePerMou * ((x - (y * (x - 1))) / (y - 1)));
+        return (loanTotal * interestRatePerMou * (x - ((y * (x - 1)) / (y - 1))));
       },
       // 结算结果
       computeResult() {
         const loanTotal = (this.totalPrice * this.proportion) / 10;
+        // this.loanTotal = loanTotal;
         const interestRatePerMou = this.interest / 12 / 100;
         const totalMouths = this.period * 12;
 
@@ -86,7 +89,7 @@
         const repayPrincipalPerMouAp = loanTotal / totalMouths;
 
         // 等额本金每月还款递减金额
-        this.decreasePerMouAp = repayPrincipalPerMouAp * interestRatePerMou;
+        const decreasePerMouAp = repayPrincipalPerMouAp * interestRatePerMou;
 
         // 等额本金初始化剩余待还本金
         let balancePerMouAp = loanTotal;
@@ -161,8 +164,22 @@
         }
         console.log(this.repayPerMouObj);
 
+        // 等额本金总还款金额（直接从等额本金数组中获取）
+        const totalRepayPriceAp = this.repayPerMouObj.repayPerMouObjAp.totalRepayedArrAp[this.repayPerMouObj.repayPerMouObjAp.totalRepayedArrAp.length - 1];
+
+        // 等额本金总还款利息： 总还本带息 - 总贷款额
+        const totalInterestAp = totalRepayPriceAp - loanTotal;
+
         // 向父组件发送数据
-        this.$emit('repayPerMouObj', this.repayPerMouObj);
+        // TODO：如果子组件需要向父组件传很多值怎么办？
+        const toFatherInfo = {
+          repayPerMouObj: this.repayPerMouObj,
+          loanTotal: this.formatFloat(loanTotal, 2),
+          totalRepayPriceAp: this.formatFloat(totalRepayPriceAp, 2),
+          totalInterestAp: this.formatFloat(totalInterestAp, 2),
+          decreasePerMouAp: this.formatFloat(decreasePerMouAp, 2),
+        };
+        this.$emit('repayPerMouObjEve', toFatherInfo);
       },
     },
   };
